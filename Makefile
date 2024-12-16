@@ -8,8 +8,8 @@ RELEASEFLAGS = -O2
 # Source and header files
 # SRCPATH and SRCNAME need to be set!
 SRCNAME     = solarsystem
-SRC 		= src/$(SRCNAME).c src/glad.c src/stb_image.c
-OBJ 		= src/$(SRCNAME).o src/glad.o src/stb_image.o
+SRC 		= src/$(SRCNAME).c src/deps/glad.c src/deps/stb_image.c
+OBJ 		= src/$(SRCNAME).o src/deps/glad.o src/deps/stb_image.o
 HEADERS 	= $(wildcard include/*.h)
 TARGET 		= SolarSystem
 
