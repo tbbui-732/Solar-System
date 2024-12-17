@@ -8,8 +8,8 @@ RELEASEFLAGS = -O2
 # Source and header files
 # SRCPATH and SRCNAME need to be set!
 SRCNAME     = solarsystem
-SRC 		= src/$(SRCNAME).c src/deps/glad.c src/deps/stb_image.c
-OBJ 		= src/$(SRCNAME).o src/deps/glad.o src/deps/stb_image.o
+SRC 		= src/$(SRCNAME).c src/deps/glad.c src/deps/stb_image.c src/deps/shader.c
+OBJ 		= src/$(SRCNAME).o src/deps/glad.o src/deps/stb_image.o src/deps/shader.o
 HEADERS 	= $(wildcard include/*.h)
 TARGET 		= SolarSystem
 
@@ -22,10 +22,6 @@ $(TARGET): $(OBJ)
 	$(CC) $(CXXFLAGS) $(DEBUGFLAGS) $^ -o $@ $(LDFLAGS)
 
 # Compile each source file into an object file
-%.o: %.cpp $(HEADERS)
-	$(CC) $(CXXFLAGS) $(DEBUGFLAGS) -c $< -o $@
-
-# Compile glad's and stb_image's source file into object file
 %.o: %.c $(HEADERS)
 	$(CC) $(CXXFLAGS) $(DEBUGFLAGS) -c $< -o $@
 
