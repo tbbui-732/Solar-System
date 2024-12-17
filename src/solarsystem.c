@@ -1,7 +1,11 @@
 // -- includes --
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 #include "../include/glad/glad.h"
 #include "../include/glfw/glfw3.h"
+#include "../include/solar_system/shader.h"
 
 // -- global variables --
 const int SCR_WIDTH = 1600;
@@ -12,6 +16,7 @@ void framebufferSizeCallback(GLFWwindow* pWindowIn, int width, int height);
 
 // -- helper functions --
 void processInput(GLFWwindow* pWindowIn);
+char* concat(const char* str1, const char* str2);
 
 int main(void) {
     // -- initialize glfw --
@@ -106,4 +111,11 @@ void framebufferSizeCallback(GLFWwindow* pWindowIn, int width, int height) {
 void processInput(GLFWwindow* pWindowIn) {
     if (glfwGetKey(pWindowIn, GLFW_KEY_ESCAPE) == GLFW_PRESS || glfwGetKey(pWindowIn, GLFW_KEY_Q) == GLFW_PRESS)
         glfwSetWindowShouldClose(pWindowIn, GL_TRUE);
+}
+
+char* concat(const char* str1, const char* str2) {
+    char* combinedString = malloc( sizeof(char) * (strlen(str1) + strlen(str2)) );
+    strcpy(combinedString, str1);
+    strcat(combinedString, str2);
+    return combinedString;
 }
