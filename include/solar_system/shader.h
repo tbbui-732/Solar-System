@@ -6,6 +6,6 @@
 #include "../glad/glad.h"
 #include "../glfw/glfw3.h"
 
-void shaderProcessFile(char* fileName, GLenum type);
+const char* shaderGetShaderSource(char* fileName);
 
 #endif
