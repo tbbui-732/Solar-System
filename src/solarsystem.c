@@ -5,8 +5,10 @@
 
 // -- global variables --
 const int SCR_WIDTH = 1600;
-const int SCR_HEIGHT = 800;
+const int SCR_HEIGHT = 900;
 
+// -- callback functions --
+void framebufferSizeCallback(GLFWwindow* pWindowIn, int width, int height);
 
 int main(void) {
     // -- initialize glfw --
@@ -31,6 +33,9 @@ int main(void) {
     }
     glfwMakeContextCurrent(pWindow);
 
+    // -- set up callback functions for poll event --
+    glfwSetFramebufferSizeCallback(pWindow, framebufferSizeCallback); // window resizing
+
     // -- initialize glad --
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         printf("Unable to initialize GLAD");
@@ -40,11 +45,21 @@ int main(void) {
 
     // -- render loop --
     while (!glfwWindowShouldClose(pWindow)) {
+        // gl: background
+        glClearColor(0.0f, 0.7f, 0.7f, 1.0f); // bright blue
         glClear(GL_COLOR_BUFFER_BIT);
+
+        // draw something
+
+        // glfw: input calls
         glfwSwapBuffers(pWindow);
         glfwPollEvents();
     }
 
     glfwTerminate();
     return 0;
+}
+
+void framebufferSizeCallback(GLFWwindow* pWindowIn, int width, int height) {
+    glViewport(0, 0, width, height);
 }
