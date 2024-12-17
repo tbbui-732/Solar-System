@@ -31,13 +31,19 @@ int main(void) {
     }
     glfwMakeContextCurrent(pWindow);
 
+    // -- initialize glad --
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        printf("Unable to initialize GLAD");
+        glfwTerminate();
+        return -1;
+    }
+
     // -- render loop --
-    printf("Testing");
-    //while (!glfwWindowShouldClose(pWindow)) {
-    //    glClear(GL_COLOR_BUFFER_BIT);
-    //    glfwSwapBuffers(pWindow);
-    //    glfwPollEvents();
-    //}
+    while (!glfwWindowShouldClose(pWindow)) {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glfwSwapBuffers(pWindow);
+        glfwPollEvents();
+    }
 
     glfwTerminate();
     return 0;
