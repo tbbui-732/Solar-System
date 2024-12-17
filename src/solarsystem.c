@@ -43,6 +43,13 @@ int main(void) {
         return -1;
     }
 
+    // -- vertex data --
+    float vertices[] = {
+        -0.5f,  -0.5f,  0.0f,
+         0.5f,  -0.5f,  0.0f,
+         0.0f,   0.5f,  0.0f
+    };
+
     // -- initialize buffers --
     unsigned int VAO, VBO; 
     glGenVertexArrays(1, &VAO);
@@ -50,9 +57,10 @@ int main(void) {
 
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VAO);
-    glBufferData(); // TODO: send vertex data to vbo
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices)/sizeof(vertices[0]), vertices, GL_STATIC_DRAW);
     
     // -- set up attribute pointers for vertex data --
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*) 0);
 
     // -- unbind to prevent accidental state changes --
     glBindBuffer(GL_ARRAY_BUFFER, 0);
