@@ -35,7 +35,7 @@ int main(void) {
     // -- set up glfw window -- 
     GLFWwindow* pWindow = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Solar System", NULL, NULL);
     if (!pWindow) {
-        printf("GLFW::INIT - Failed to create glfw window");
+        printf("GLFW::INIT::ERROR - Failed to create glfw window");
         glfwTerminate();
         return -1;
     }
@@ -75,6 +75,68 @@ int main(void) {
     // -- unbind to prevent accidental state changes --
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    // -- create shader program --
+    GLuint shaderProgram = glCreateProgram();
+
+    // -- get shader sources -- 
+    char cwd[512];
+    getcwd(cwd, 512);
+    char* vertexShaderPath = concat(cwd, "/src/shaders/vertex.glsl");
+    char* fragmentShaderPath = concat(cwd, "/src/shaders/fragment.glsl");
+    const char* vertexShaderSource = shaderGetShaderSource(vertexShaderPath);
+    const char* fragmentShaderSource = shaderGetShaderSource(fragmentShaderPath);
+    free(vertexShaderPath);
+    free(fragmentShaderPath);
+
+    // -- create and compile shaders --
+    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glCompileShader(vertexShader);
+    glCompileShader(fragmentShader);
+
+    // -- error check shaders --
+    int success; char log[512];
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(vertexShader, 512, NULL, log);
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        glDeleteProgram(shaderProgram);
+        printf("ERROR: Unable to compile vertex shader\n%s", log);
+        exit(1);
+    }
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(fragmentShader, 512, NULL, log);
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        glDeleteProgram(shaderProgram);
+        printf("ERROR: Unable to compile fragment shader\n%s", log);
+        exit(1);
+    }
+
+    // -- attach shaders --
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+
+    // -- link and compile shader program --
+    glLinkProgram(shaderProgram);
+    glGetProgramiv(shaderProgram, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(shaderProgram, 512, NULL, log);
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        glDeleteProgram(shaderProgram);
+        printf("ERROR: Unable to compile shader program\n%s", log);
+        exit(1);
+    }
+
+    // -- clean up shaders --
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 
     // -- render loop --
     while (!glfwWindowShouldClose(pWindow)) {
