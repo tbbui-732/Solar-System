@@ -137,6 +137,8 @@ int main(void) {
     // -- clean up shaders --
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+    free((void*)vertexShaderSource); // NOTE: i don't know if this causes any side effects!!!
+    free((void*)fragmentShaderSource);
 
     // -- render loop --
     while (!glfwWindowShouldClose(pWindow)) {
