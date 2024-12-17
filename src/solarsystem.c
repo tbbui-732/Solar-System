@@ -72,12 +72,18 @@ int main(void) {
         glClearColor(0.0f, 0.7f, 0.7f, 1.0f); // bright blue
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // draw something
+        // draw sample triangle
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // glfw: input calls
         glfwSwapBuffers(pWindow);
         glfwPollEvents();
     }
+
+    // -- deallocate buffers --
+    glDeleteBuffers(1, &VBO);
+    glDeleteVertexArrays(1, &VAO);
 
     glfwTerminate();
     return 0;
