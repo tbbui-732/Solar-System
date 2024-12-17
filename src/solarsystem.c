@@ -10,6 +10,9 @@ const int SCR_HEIGHT = 900;
 // -- callback functions --
 void framebufferSizeCallback(GLFWwindow* pWindowIn, int width, int height);
 
+// -- helper functions --
+void processInput(GLFWwindow* pWindowIn);
+
 int main(void) {
     // -- initialize glfw --
     if (!glfwInit()) {
@@ -68,6 +71,9 @@ int main(void) {
 
     // -- render loop --
     while (!glfwWindowShouldClose(pWindow)) {
+        // keyboard input
+        processInput(pWindow);
+
         // gl: background
         glClearColor(0.0f, 0.7f, 0.7f, 1.0f); // bright blue
         glClear(GL_COLOR_BUFFER_BIT);
@@ -89,6 +95,13 @@ int main(void) {
     return 0;
 }
 
+// -- callback functions --
 void framebufferSizeCallback(GLFWwindow* pWindowIn, int width, int height) {
     glViewport(0, 0, width, height);
+}
+
+// -- helper functions --
+void processInput(GLFWwindow* pWindowIn) {
+    if (glfwGetKey(pWindowIn, GLFW_KEY_ESCAPE) == GLFW_PRESS || glfwGetKey(pWindowIn, GLFW_KEY_Q) == GLFW_PRESS)
+        glfwSetWindowShouldClose(pWindowIn, GL_TRUE);
 }
