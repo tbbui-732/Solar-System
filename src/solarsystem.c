@@ -43,6 +43,21 @@ int main(void) {
         return -1;
     }
 
+    // -- initialize buffers --
+    unsigned int VAO, VBO; 
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VAO);
+    glBufferData(); // TODO: send vertex data to vbo
+    
+    // -- set up attribute pointers for vertex data --
+
+    // -- unbind to prevent accidental state changes --
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
     // -- render loop --
     while (!glfwWindowShouldClose(pWindow)) {
         // gl: background
