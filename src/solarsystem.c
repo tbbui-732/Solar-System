@@ -9,7 +9,7 @@
 
 // -- global variables --
 const int SCR_WIDTH = 1600;
-const int SCR_HEIGHT = 900;
+const int SCR_HEIGHT = 1200;
 
 // -- callback functions --
 void framebufferSizeCallback(GLFWwindow* pWindowIn, int width, int height);
