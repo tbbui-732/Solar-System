@@ -1,8 +1,5 @@
 #include "../../include/solar_system/spheres.h"
 
-#include <math.h>
-#include <stdlib.h>
-
 void sphereBuildVertices(float* vertices, float* normals, float* texCoords, float radius, int sectorCount, int stackCount) {
     // allocate space for each array
     vertices    = malloc(sizeof(float) * 3 * sectorCount * stackCount); // 3 to account for x, y, and z
@@ -53,6 +50,4 @@ void sphereBuildVertices(float* vertices, float* normals, float* texCoords, floa
             texCoords[texIdx++] = t;
         }
     }
-
-    return vertices
 }
