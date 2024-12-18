@@ -27,9 +27,5 @@ const char* shaderGetShaderSource(char* fileName) {
     shaderSourceBuffer[fileSize] = '\0';
     fclose(fp);
 
-    // pass in shader source
-    const char* shaderSource = malloc((fileSize + 1) * sizeof(char));
-    strcpy((char*)shaderSource, shaderSourceBuffer); // this is probably a bad way of doing this
-    free(shaderSourceBuffer);
-    return shaderSource;
+    return (const char*) shaderSourceBuffer;
 }
