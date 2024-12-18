@@ -4,7 +4,8 @@ layout(location = 1) in vec3 inColor;
 
 out vec3 ourColor;
 
-void main() {
-    gl_Position = vec4(vec3, 1.0f);
-    ourColor = inColor;
+void main() 
+{
+    gl_Position = vec4(inPos, 1.0f);
+    ourColor = vec3(inColor);
 }
