@@ -65,12 +65,14 @@ int main(void) {
     glBindVertexArray(VAO);
 
     glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VAO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices)/sizeof(vertices[0]), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
     // -- set up attribute pointers for vertex data --
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*) 0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*) (3*sizeof(float)));
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
 
     // -- unbind to prevent accidental state changes --
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -122,7 +124,7 @@ int main(void) {
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
 
-    // -- link and compile shader program --
+    // -- link program --
     glLinkProgram(shaderProgram);
     glGetProgramiv(shaderProgram, GL_COMPILE_STATUS, &success);
     if (!success) {
@@ -150,6 +152,7 @@ int main(void) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw sample triangle
+        glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -161,6 +164,7 @@ int main(void) {
     // -- deallocate buffers --
     glDeleteBuffers(1, &VBO);
     glDeleteVertexArrays(1, &VAO);
+    glDeleteProgram(shaderProgram);
 
     glfwTerminate();
     return 0;
